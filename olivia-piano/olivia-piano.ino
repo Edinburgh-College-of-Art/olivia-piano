@@ -61,8 +61,7 @@ void loop()
   //  Serial.println(motorSpeed);
   for (uint8_t i  = 0; i < buttonCount; ++i)
   {
-
-    digitalWrite(dcMotor[i], (buttonValue[i]) ? LOW : HIGH);
+    digitalWrite(4, (buttonValue[0]) ? LOW : HIGH);
   }
   //  for (uint8_t i  = 0; i < motorCount; ++i)
   //  {
