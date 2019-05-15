@@ -56,13 +56,19 @@ void loop()
   printInputValues();
   //----------------------------------------------------
   // what do the controls do?
-
-  for (uint8_t i  = 0; i < motorCount; ++i)
+  uint8_t motorSpeed = map(potValue[0], 0, 1024, 0, 255);
+  //  Serial.print("speed: ");
+  //  Serial.println(motorSpeed);
+  for (uint8_t i  = 0; i < buttonCount; ++i)
   {
-    uint8_t motorSpeed = map(potValue[0], 0, 1024, 0, 255);
-    analogWrite(dcMotor[i], motorSpeed);
-  }
-  //----------------------------------------------------
 
+    digitalWrite(dcMotor[i], (buttonValue[i]) ? LOW : HIGH);
+  }
+  //  for (uint8_t i  = 0; i < motorCount; ++i)
+  //  {
+  //    analogWrite(dcMotor[i], motorSpeed);
+  //  }
+  //----------------------------------------------------
+  delay(500);
 }
 //------------------------------------------------------
