@@ -3,6 +3,8 @@
 */
 #include <Bounce2.h>
 //------------------------------------------------------
+const bool DEBUG_MODE = true;
+//------------------------------------------------------
 // Control Pins
 //------------------------------------------------------
 // Buttons
@@ -10,6 +12,7 @@ const uint8_t buttonCount = 2;
 const uint8_t yellowButton = 2;
 const uint8_t blueButton = 4;
 const uint8_t buttons[buttonCount] = {yellowButton, blueButton};
+Bounce debouncer[buttonCount];
 //------------------------------------------------------
 // Pots
 const uint8_t potCount = 4;
@@ -19,18 +22,15 @@ const uint8_t slidePot = A2;
 const uint8_t pressurePot = A3;
 const uint8_t pots[potCount] = {leftPot, rightPot, slidePot, pressurePot};
 //------------------------------------------------------
-Bounce debouncer[buttonCount];
-//------------------------------------------------------
 // Output Pins
 const uint8_t solenoidCount = 1;
-const uint8_t solenoid[] = {3, 5, 6, 7, 8};
+const uint8_t solenoid[solenoidCount] = {7};
 const uint8_t motorCount = 1;
-const uint8_t dcMotor[] = {3, 5, 6, 9, 10, 11};
-const uint8_t rackPinion  = 9;
+const uint8_t dcMotor[motorCount] = {3};
 //------------------------------------------------------
 // Readings
 bool buttonValue[buttonCount] = {false};
-unsigned int potValue[buttonCount] = {0};
+unsigned int potValue[potCount] = {0u};
 //------------------------------------------------------
 void setup()
 {
@@ -48,26 +48,31 @@ void setup()
   {
     pinMode(dcMotor[i], OUTPUT);
   }
+  for (uint8_t i  = 0; i < solenoidCount; ++i)
+  {
+    pinMode(solenoid[i], OUTPUT);
+  }
 }
 //------------------------------------------------------
 void loop()
 {
   getInputValues();
-  printInputValues();
   //----------------------------------------------------
   // what do the controls do?
-  uint8_t motorSpeed = map(potValue[0], 0, 1024, 0, 255);
-  //  Serial.print("speed: ");
-  //  Serial.println(motorSpeed);
-  for (uint8_t i  = 0; i < buttonCount; ++i)
+  for (uint8_t i  = 0; i < solenoidCount; ++i)
   {
-    digitalWrite(4, (buttonValue[0]) ? LOW : HIGH);
+    digitalWrite(solenoid[i] , !buttonValue[i]);
   }
-  //  for (uint8_t i  = 0; i < motorCount; ++i)
-  //  {
-  //    analogWrite(dcMotor[i], motorSpeed);
-  //  }
+  for (uint8_t i  = 0; i < motorCount; ++i)
+  {
+    uint8_t motorSpeed = map(potValue[i], 0, 1024, 0, 255);
+    analogWrite(dcMotor[i], motorSpeed);
+  }
   //----------------------------------------------------
-  delay(500);
+  if (DEBUG_MODE)
+  {
+    printInputValues();
+    delay(500);
+  }
 }
 //------------------------------------------------------
