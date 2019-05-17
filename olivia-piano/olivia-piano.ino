@@ -151,7 +151,7 @@ void loop()
   analogWrite(dcMotor[1], motorSpeed);
   //----------------------------------------------------
   // Servo Scraper
-  // Move to positino based on slider
+  // Move to position based on slider
   rackPinionPos = map(analogRead(pots[slidePots]), 0 , 1024, 0, maxRackPinionPos);
   if (now - previousRackPinionTime > rackPinionUpdateTime)
   {
