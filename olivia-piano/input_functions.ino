@@ -4,7 +4,7 @@ void getInputValues()
   for (uint8_t i  = 0; i < buttonCount; ++i)
   {
     debouncer[i].update();
-    buttonValue[i] = debouncer[i].read();
+    buttonPressed[i] = bool(debouncer[i].read()) ? false : true;
   }
 
   for (uint8_t i  = 0; i < potCount; ++i)
@@ -22,7 +22,7 @@ void printInputValues()
   {
     Serial.print(i);
     Serial.print(": ");
-    Serial.println(buttonValue[i]);
+    Serial.println(buttonPressed[i]);
   }
   Serial.println("Pots: ");
   for (uint8_t i  = 0; i < potCount; ++i)
