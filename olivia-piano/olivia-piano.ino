@@ -17,10 +17,9 @@
 */
 #include <Bounce2.h>
 #include <Servo.h>
-#include <EEPROM.h>
 //------------------------------------------------------------------
 const bool DEBUG_MODE = true;
-const bool WIPE_EEPROM = false;
+
 //------------------------------------------------------------------
 // Control Pins
 //------------------------------------------------------------------
@@ -60,7 +59,7 @@ int rackPinionPos = 0;
 unsigned int rackPinionUpdateTime = 15;
 unsigned long previousRackPinionTime = 0;
 bool rackPinionDir = false;
-const unsigned int maxRackPinionMovement = 360;
+const unsigned int maxRackPinionPos = 360;
 //------------------------------------------------------------------
 // Readings
 bool buttonPressed[buttonCount] = {false};
@@ -97,14 +96,8 @@ void setup()
   }
   pinMode(rapidSolenoid, OUTPUT);
 
-  if (WIPE_EEPROM)
-  {
-    for (int i = 0; i < 255; i++)
-    {
-      EEPROM[i] = 0;
-    }
-  }
-  rackPinionPos = EEPROM[0] | (EEPROM[1] << 8);
+  rackPinionPos = map(analogRead(pots[slidePots]), 0 , 1024, 0, maxRackPinionPos);
+  rackPinion.write(rackPinionPos);
 }
 //------------------------------------------------------------------------------
 void loop()
@@ -158,33 +151,11 @@ void loop()
   analogWrite(dcMotor[1], motorSpeed);
   //----------------------------------------------------
   // Servo Scraper
-  // How many rotations in full movement of rack and pinion?
-  // Save the position of the servo in EEPROM
-
-  // EEPROM[0] = (servoPosition && 0xFF);
-  // EEPROM[1] = ((servoPosition >> 8) && 0xFF);
-
+  // Move to positino based on slider
+  rackPinionPos = map(analogRead(pots[slidePots]), 0 , 1024, 0, maxRackPinionPos);
   if (now - previousRackPinionTime > rackPinionUpdateTime)
   {
-    if (rackPinionDir)
-    {
-      rackPinion.write(rackPinionPos++);
-      if (rackPinionPos > maxRackPinionMovement)
-      {
-        rackPinionDir = false;
-      }
-    }
-    else
-    {
-      if (rackPinionPos <= 0)
-      {
-        rackPinionDir = true;
-      }
-      rackPinion.write(rackPinionPos--);
-    }
-    EEPROM[0] = (rackPinionPos && 0xFF);
-    EEPROM[1] = ((rackPinionPos >> 8) && 0xFF);
-    previousRackPinionTime = now;
+    rackPinion.write(rackPinionPos);
   }
   //----------------------------------------------------
   if (DEBUG_MODE)
