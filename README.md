@@ -45,7 +45,7 @@ In the current version of the code, this is the pinout, though this can be chang
 | Yellow Button  | Solenoid 1 Fire      |
 | Blue Button    | Solenoid 2 Fire      |
 | Left Pot       | Rapid Solenoid Speed |
-| Right Pot      | motor 1 Speed  |
+| Right Pot      | Motor 1 Speed  |
 | Slide Pot      | Servo Scraper Position        |
 | Force Resistor | Motor 2 Speed        |
 
