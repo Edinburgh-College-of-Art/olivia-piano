@@ -1,5 +1,19 @@
 /*
    Olivia Piano
+
+   Two push buttons:
+      One: Solenoid fire once per push
+      Two: Solenoid fire once per push
+
+   Two Pots:
+      One: Solenoid fire speed
+      Two: DC Motor Speed
+      
+   Slider:
+      Scraping
+
+   Pressure:
+      Motor Speed
 */
 #include <Bounce2.h>
 //------------------------------------------------------
@@ -23,8 +37,8 @@ const uint8_t pressurePot = A3;
 const uint8_t pots[potCount] = {leftPot, rightPot, slidePot, pressurePot};
 //------------------------------------------------------
 // Output Pins
-const uint8_t solenoidCount = 1;
-const uint8_t solenoid[solenoidCount] = {7};
+const uint8_t solenoidCount = 2;
+const uint8_t solenoid[solenoidCount] = {8, 7};
 const uint8_t motorCount = 1;
 const uint8_t dcMotor[motorCount] = {3};
 //------------------------------------------------------
@@ -54,6 +68,8 @@ void setup()
   }
 }
 //------------------------------------------------------
+bool buttonLock[buttonCount] = {false};
+
 void loop()
 {
   getInputValues();
@@ -61,7 +77,14 @@ void loop()
   // what do the controls do?
   for (uint8_t i  = 0; i < solenoidCount; ++i)
   {
-    digitalWrite(solenoid[i] , !buttonValue[i]);
+    if (buttonLock[buttonCount] && !buttonValue[i])
+    {
+      digitalWrite(solenoid[i] , HIGH);
+      Serial.println("fire");
+    }
+    buttonLock[buttonCount] = !buttonValue[i] ? true : false;    
+    delay(15);
+    digitalWrite(solenoid[i] , LOW);
   }
   for (uint8_t i  = 0; i < motorCount; ++i)
   {
@@ -71,7 +94,7 @@ void loop()
   //----------------------------------------------------
   if (DEBUG_MODE)
   {
-    printInputValues();
+//    printInputValues();
     delay(500);
   }
 }
