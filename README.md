@@ -1,12 +1,14 @@
 # Olivia Piano
 
-## What is it
+* * *
+
+## What is it?
 
 Code for Olivia's prepared piano
 
-## What does it involve
+## What does it involve?
 
-At the moment there:
+At the moment there are:
 
 -   x2 Push Buttons
 -   x3 Potentiometers
@@ -18,6 +20,8 @@ At the moment there:
     -   x1 Rapid Fire
 -   x1 Servo
 -   x2 DC Motors
+
+* * *
 
 ## Pin out
 
@@ -40,14 +44,14 @@ In the current version of the code, this is the pinout, though this can be chang
 
 ## Control Map
 
-| Input          | Output               |
-| :------------- | :------------------- |
-| Yellow Button  | Solenoid 1 Fire      |
-| Blue Button    | Solenoid 2 Fire      |
-| Left Pot       | Rapid Solenoid Speed |
-| Right Pot      | Motor 1 Speed  |
-| Slide Pot      | Servo Scraper Position        |
-| Force Resistor | Motor 2 Speed        |
+| Input          | Output                 |
+| :------------- | :--------------------- |
+| Yellow Button  | Solenoid 1 Fire        |
+| Blue Button    | Solenoid 2 Fire        |
+| Left Pot       | Rapid Solenoid Speed   |
+| Right Pot      | Motor 1 Speed          |
+| Slide Pot      | Servo Scraper Position |
+| Force Resistor | Motor 2 Speed          |
 
 ## Wiring
 
