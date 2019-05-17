@@ -1,25 +1,20 @@
 /*
    Olivia Piano
 
-   Two push buttons:
-      One: Solenoid fire once per push
-      Two: Solenoid fire once per push
+  | Input          | Output                 |
+  | :------------- | :--------------------- |
+  | Yellow Button  | Solenoid 1 Fire        |
+  | Blue Button    | Solenoid 2 Fire        |
+  | Left Pot       | Rapid Solenoid Speed   |
+  | Right Pot      | Motor 1 Speed          |
+  | Slide Pot      | Servo Scraper Position |
+  | Force Resistor | Motor 2 Speed          |
 
-   Two Pots:
-      One: Solenoid fire speed
-      Two: DC Motor Speed
-
-   Slider:
-      Scraping
-
-   Pressure:
-      Motor Speed
 */
 #include <Bounce2.h>
 #include <Servo.h>
 //------------------------------------------------------------------
-const bool DEBUG_MODE = true;
-
+const bool DEBUG_MODE = false;
 //------------------------------------------------------------------
 // Control Pins
 //------------------------------------------------------------------
@@ -47,7 +42,7 @@ const uint8_t rapidSolenoidPot = leftPot;
 //------------------------------------------------------------------
 // Output Pins
 const uint8_t solenoidCount = 2;
-const uint8_t solenoid[solenoidCount] = {8, 7};
+const uint8_t solenoid[solenoidCount] = {7, 8};
 const uint8_t rapidSolenoid = 6;
 const uint8_t motorCount = 1;
 const uint8_t dcMotor[motorCount] = {3};
@@ -68,7 +63,7 @@ unsigned int potValue[potCount] = {0u};
 //------------------------------------------------------------------
 // Timers and switches
 unsigned long buttonOnTime[buttonCount] = {0};
-unsigned int solenoidFireTime[solenoidCount] = {15};
+unsigned int solenoidFireTime[solenoidCount] = {15, 15};
 unsigned int rapidSolenoidSpeed = 15;
 unsigned int rapidSolenoidTimer = 0;
 bool rapidSolenoidOn = true;
@@ -96,7 +91,7 @@ void setup()
   }
   pinMode(rapidSolenoid, OUTPUT);
 
-  rackPinionPos = map(analogRead(pots[slidePots]), 0 , 1024, 0, maxRackPinionPos);
+  rackPinionPos = map(analogRead(pots[slidePot]), 0 , 1024, 0, maxRackPinionPos);
   rackPinion.write(rackPinionPos);
 }
 //------------------------------------------------------------------------------
@@ -113,7 +108,10 @@ void loop()
     if (!buttonHeld[i] && buttonPressed[i])
     {
       digitalWrite(solenoid[i] , HIGH);
-      Serial.println("fire");
+      //      Serial.println("fire");
+      //      Serial.println(solenoid[i]);
+      //      Serial.println(buttonHeld[i]);
+      //      Serial.println(solenoidFireTime[i]);
       buttonHeld[i] = true;
       buttonOnTime[i] = millis();
     }
@@ -152,7 +150,7 @@ void loop()
   //----------------------------------------------------
   // Servo Scraper
   // Move to position based on slider
-  rackPinionPos = map(analogRead(pots[slidePots]), 0 , 1024, 0, maxRackPinionPos);
+  rackPinionPos = map(analogRead(pots[slidePot]), 0 , 1024, 0, maxRackPinionPos);
   if (now - previousRackPinionTime > rackPinionUpdateTime)
   {
     rackPinion.write(rackPinionPos);
