@@ -1,6 +1,13 @@
 # Olivia Piano
 
-* * *
+---
+
+- [What is it?](#what-is-it)
+- [What does it involve?](#what-does-it-involve)
+- [Pin out](#pin-out)
+- [Control Map](#control-map)
+- [Wiring](#wiring)
+	- [Notes](#notes)
 
 ## What is it?
 
@@ -10,18 +17,18 @@ Code for Olivia's prepared piano
 
 At the moment there are:
 
--   x2 Push Buttons
--   x3 Potentiometers
-    -   x1 Slider
-    -   x2 Rotary
--   x1 Force-Sensing Resistor
--   x3 Solenoids
-    -   x2 Single Fire
-    -   x1 Rapid Fire
--   x1 Servo
--   x2 DC Motors
+- x2 Push Buttons
+- x3 Potentiometers
+  - x1 Slider
+  - x2 Rotary
+- x1 Force-Sensing Resistor
+- x3 Solenoids
+  - x2 Single Fire
+  - x1 Rapid Fire
+- x1 Servo
+- x2 DC Motors
 
-* * *
+---
 
 ## Pin out
 
@@ -58,3 +65,8 @@ In the current version of the code, this is the pinout, though this can be chang
 Wiring is a little chaotic, but here is a wiring diagram for illustration.
 
 ![](wiring/olivia-piano-wiring_bb.jpg)
+
+### Notes
+
+- Resistor in front of the slide pot `5V` of `~50 Ω`;
+- `~10 kΩ` Resistor between the pressure resistor and `GND`
