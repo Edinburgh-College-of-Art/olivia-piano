@@ -14,7 +14,7 @@
 #include <Bounce2.h>
 #include <Servo.h>
 //------------------------------------------------------------------
-const bool DEBUG_MODE = true;
+const bool DEBUG_MODE = false;
 //------------------------------------------------------------------
 // Control Pins
 //------------------------------------------------------------------
@@ -45,8 +45,8 @@ const uint8_t solenoidCount = 2;
 const uint8_t solenoid[solenoidCount] = {7, 8};
 const uint8_t rapidSolenoid = 6;
 bool rapidSolenoidState = false;
-const uint8_t motorCount = 1;
-const uint8_t dcMotor[motorCount] = {3};
+const uint8_t motorCount = 2;
+const uint8_t dcMotor[motorCount] = {3, 5};
 //------------------------------------------------------------------
 // Servo
 Servo rackPinion;
